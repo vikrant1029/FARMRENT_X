@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ equipment.name }} | FarmRent</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f5;
+            color: #222;
+        }
+
+        nav {
+            background: #176b3a;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        nav a:hover {
+            color: #f4b400;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 25px;
+            color: #666;
+        }
+
+        .breadcrumb a,
+        .back-link {
+            color: #176b3a;
+            text-decoration: none;
+        }
+
+        .detail-card {
+            background: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+        }
+
+        .equipment-image,
+        .default-image {
+            width: 100%;
+            height: 390px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .default-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                linear-gradient(rgba(23,107,58,.6), rgba(23,107,58,.6)),
+                url("https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&w=1000&q=80");
+            background-size: cover;
+            background-position: center;
+            font-size: 80px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e6f4ea;
+            color: #176b3a;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #176b3a;
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .rating {
+            color: #e6a400;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 22px;
+        }
+
+        .info-row {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .info-label {
+            color: #666;
+        }
+
+        .info-value {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .price {
+            color: #176b3a;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .price span {
+            font-size: 15px;
+            font-weight: normal;
+            color: #777;
+        }
+
+        .rent-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background: #176b3a;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .rent-btn:hover {
+            background: #0f542d;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 25px;
+        }
+
+        /* REVIEWS SECTION */
+
+        .reviews-section {
+            margin-top: 35px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+        }
+
+        .section-title {
+            color: #176b3a;
+            font-size: 27px;
+            margin-bottom: 20px;
+        }
+
+        .average-box {
+            background: #f0f7f1;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .average-number {
+            font-size: 34px;
+            font-weight: bold;
+            color: #176b3a;
+        }
+
+        .stars {
+            color: #efa900;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .review-form {
+            margin: 25px 0 35px;
+        }
+
+        .review-form label {
+            display: block;
+            font-weight: bold;
+            margin: 16px 0 8px;
+        }
+
+        .review-form select,
+        .review-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5ddd6;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .review-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .review-form select:focus,
+        .review-form textarea:focus {
+            outline: 2px solid #b4d8bd;
+            border-color: #176b3a;
+        }
+
+        .submit-review {
+            margin-top: 16px;
+            padding: 13px 24px;
+            background: #176b3a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-review:hover {
+            background: #0f542d;
+        }
+
+        .review-message {
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .review-message.success {
+            background: #e6f4ea;
+            color: #176b3a;
+        }
+
+        .review-message.error {
+            background: #fdeaea;
+            color: #a12626;
+        }
+
+        .login-notice {
+            padding: 18px;
+            background: #f5f7f5;
+            border-radius: 10px;
+            line-height: 1.8;
+            margin: 20px 0;
+        }
+
+        .login-notice a {
+            color: #176b3a;
+            font-weight: bold;
+        }
+
+        .review-card {
+            border: 1px solid #e5e9e5;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            color: #176b3a;
+        }
+
+        .review-date {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .review-comment {
+            line-height: 1.8;
+            color: #444;
+            overflow-wrap: anywhere;
+            margin-top: 10px;
+        }
+
+        .empty-reviews {
+            color: #666;
+            background: #f7f9f7;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        footer {
+            background: #123d27;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 750px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 5px;
+                display: inline-block;
+            }
+
+            .detail-card {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .equipment-image,
+            .default-image {
+                height: 260px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .reviews-section {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">🚜 FarmRent</div>
+
+    <div>
+        <a href="/">Home</a>
+        <a href="{% url 'equipment_list' %}">Equipment</a>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'my_bookings' %}">My Bookings</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main class="container">
+
+    <div class="breadcrumb">
+        <a href="{% url 'equipment_list' %}">Equipment</a>
+        / {{ equipment.name }}
+    </div>
+
+    <!-- EQUIPMENT DETAILS -->
+
+    <div class="detail-card">
+
+        <div>
+            {% if equipment.image_url %}
+                <img
+                    class="equipment-image"
+                    src="{{ equipment.image_url }}"
+                    alt="{{ equipment.name }}"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+                <div class="default-image" style="display:none;">
+                    🚜
+                </div>
+            {% else %}
+                <div class="default-image">🚜</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <span class="category">
+                {{ equipment.category }}
+            </span>
+
+            <h1>{{ equipment.name }}</h1>
+
+            <div class="rating">
+                ★★★★★ {{ equipment.rating }} / 5
+                <span style="color:#777;font-size:13px;">
+                    (Equipment listing rating)
+                </span>
+            </div>
+
+            <p class="description">
+                {{ equipment.description }}
+            </p>
+
+            <div class="info-row">
+                <span class="info-label">📍 Location</span>
+                <span class="info-value">
+                    {{ equipment.location }}, Maharashtra
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Category</span>
+                <span class="info-value">
+                    {{ equipment.category }}
+                </span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Availability</span>
+                <span class="info-value">Available</span>
+            </div>
+
+            <div class="price">
+                ₹{{ equipment.price_per_day|floatformat:0 }}
+                <span>/ day</span>
+            </div>
+
+            <a
+                href="{% url 'book_equipment' equipment.id %}"
+                class="rent-btn">
+                Rent This Equipment
+            </a>
+
+            <a
+                href="{% url 'equipment_list' %}"
+                class="back-link">
+                ← Back to Equipment
+            </a>
+        </div>
+
+    </div>
+
+    <!-- REVIEWS AND RATINGS -->
+
+    <section class="reviews-section" id="reviews">
+
+        <h2 class="section-title">⭐ Customer Reviews</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="review-message
+                    {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="average-box">
+            <h3>Customer Average Rating</h3>
+
+            {% if average_rating != None %}
+                <p class="average-number">
+                    {{ average_rating|floatformat:1 }} / 5
+                </p>
+
+                <p class="stars" aria-label="Customer average rating">
+                    ★★★★★
+                </p>
+
+                <p>
+                    Based on {{ reviews|length }}
+                    customer review{{ reviews|length|pluralize }}
+                </p>
+            {% else %}
+                <p>No customer ratings yet.</p>
+                <p>Be the first to share your experience!</p>
+            {% endif %}
+        </div>
+
+        <h3>Write Your Review</h3>
+
+        {% if user.is_authenticated %}
+
+            <form
+                class="review-form"
+                method="POST"
+                action="{% url 'add_review' equipment.id %}">
+
+                {% csrf_token %}
+
+                <label for="rating">Your Rating</label>
+
+                <select name="rating" id="rating" required>
+                    <option value="">Choose a rating</option>
+
+                    <option value="5"
+                        {% if user_review and user_review.rating == 5 %}selected{% endif %}>
+                        ★★★★★ - Excellent
+                    </option>
+
+                    <option value="4"
+                        {% if user_review and user_review.rating == 4 %}selected{% endif %}>
+                        ★★★★ - Very Good
+                    </option>
+
+                    <option value="3"
+                        {% if user_review and user_review.rating == 3 %}selected{% endif %}>
+                        ★★★ - Good
+                    </option>
+
+                    <option value="2"
+                        {% if user_review and user_review.rating == 2 %}selected{% endif %}>
+                        ★★ - Fair
+                    </option>
+
+                    <option value="1"
+                        {% if user_review and user_review.rating == 1 %}selected{% endif %}>
+                        ★ - Poor
+                    </option>
+                </select>
+
+                <label for="comment">Your Comment</label>
+
+                <textarea
+                    name="comment"
+                    id="comment"
+                    maxlength="2000"
+                    required
+                    placeholder="Share your experience with this equipment...">{% if user_review %}{{ user_review.comment }}{% endif %}</textarea>
+
+                <button type="submit" class="submit-review">
+                    {% if user_review %}
+                        Update My Review
+                    {% else %}
+                        Submit Review
+                    {% endif %}
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <div class="login-notice">
+                Please <a href="{% url 'login' %}">login</a>
+                to submit a rating and review.
+            </div>
+
+        {% endif %}
+
+        <hr style="border:none;border-top:1px solid #eee;margin:30px 0;">
+
+        <h3>What Customers Say</h3>
+
+        {% for review in reviews %}
+
+            <article class="review-card">
+
+                <div class="review-header">
+                    <span class="reviewer-name">
+                        {{ review.user.username }}
+                    </span>
+
+                    <span class="review-date">
+                        {{ review.created_at|date:"d M Y" }}
+                    </span>
+                </div>
+
+                <div class="stars">
+                    {% for star in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                    <span style="color:#555;font-size:14px;">
+                        {{ review.rating }}/5
+                    </span>
+                </div>
+
+                <p class="review-comment">
+                    {{ review.comment|linebreaksbr }}
+                </p>
+
+            </article>
+
+        {% empty %}
+
+            <p class="empty-reviews">
+                No customer reviews yet. Your feedback can help
+                other farmers make better decisions.
+            </p>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 FarmRent</p>
+    <p>Smart Online Farming Equipment Rental System</p>
+</footer>
+
+</body>
+</html>

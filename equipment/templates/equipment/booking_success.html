@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Booking Successful - FarmRent</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f5f7f5;
+            color: #222;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            background: #176b3a;
+            padding: 18px 8%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 16px;
+        }
+
+
+        nav a:hover {
+            color: #f4b400;
+        }
+
+
+        /* =========================
+           SUCCESS SECTION
+        ========================= */
+
+        .success-section {
+
+            min-height: 80vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 50px 20px;
+        }
+
+
+        .success-card {
+
+            background: white;
+
+            width: 100%;
+
+            max-width: 650px;
+
+            padding: 40px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.10);
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           SUCCESS ICON
+        ========================= */
+
+        .success-icon {
+
+            width: 80px;
+
+            height: 80px;
+
+            background: #e6f4ea;
+
+            color: #176b3a;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            font-size: 42px;
+
+            font-weight: bold;
+        }
+
+
+        .success-card h1 {
+
+            color: #176b3a;
+
+            font-size: 32px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .success-card > p {
+
+            color: #666;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           RECEIPT
+        ========================= */
+
+        .receipt {
+
+            text-align: left;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            margin-bottom: 30px;
+        }
+
+
+        .receipt-header {
+
+            background: #176b3a;
+
+            color: white;
+
+            padding: 15px 20px;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+
+        .receipt-body {
+
+            padding: 20px;
+        }
+
+
+        .receipt-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .receipt-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .receipt-label {
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+
+        .receipt-value {
+
+            color: #222;
+
+            font-weight: bold;
+
+            text-align: right;
+        }
+
+
+        .total-row {
+
+            background: #f1f8f3;
+
+            margin: 10px -20px -20px;
+
+            padding: 18px 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #176b3a;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+
+        .home-btn {
+
+            background: #176b3a;
+
+            color: white;
+        }
+
+
+        .equipment-btn {
+
+            background: #e6f4ea;
+
+            color: #176b3a;
+        }
+
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            background: #123d27;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            nav a {
+
+                margin-left: 8px;
+
+                margin-right: 8px;
+            }
+
+
+            .success-card {
+
+                padding: 25px 18px;
+            }
+
+
+            .success-card h1 {
+
+                font-size: 26px;
+            }
+
+
+            .receipt-row {
+
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+
+            .receipt-value {
+
+                text-align: left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav>
+
+    <div class="logo">
+        🚜 FarmRent
+    </div>
+
+
+    <div>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/equipment/">
+            Equipment
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     SUCCESS
+========================= -->
+
+<section class="success-section">
+
+
+    <div class="success-card">
+
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <h1>
+            Booking Successful!
+        </h1>
+
+
+        <p>
+            Your equipment has been successfully booked.
+        </p>
+
+
+
+        <!-- =========================
+             RECEIPT
+        ========================= -->
+
+        <div class="receipt">
+
+
+            <div class="receipt-header">
+                Booking Receipt
+            </div>
+
+
+            <div class="receipt-body">
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Booking ID
+                    </span>
+
+                    <span class="receipt-value">
+                        #{{ booking.id }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Customer Name
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.customer_name }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Phone Number
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.customer_phone }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Equipment
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.equipment.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Category
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.equipment.category }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Location
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.equipment.location }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Start Date
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.start_date }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Number of Days
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.number_of_days }}
+                    </span>
+
+                </div>
+
+
+                <div class="receipt-row">
+
+                    <span class="receipt-label">
+                        Status
+                    </span>
+
+                    <span class="receipt-value">
+                        {{ booking.status }}
+                    </span>
+
+                </div>
+
+
+                <div class="total-row">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <span>
+                        ₹{{ booking.total_price|floatformat:0 }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             BUTTONS
+        ========================= -->
+
+        <div class="buttons">
+
+            <a
+                href="/equipment/"
+                class="btn equipment-btn">
+
+                Browse Equipment
+
+            </a>
+
+
+            <a
+                href="/"
+                class="btn home-btn">
+
+                Back to Home
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <p>
+        © 2026 FarmRent |
+        Smart Online Farming Equipment Rental System
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

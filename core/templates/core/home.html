@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FarmRent - Smart Farming Equipment Rental</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f5f7f5;
+            color: #222;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+
+            background: #176b3a;
+
+            padding: 18px 8%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .logo {
+
+            color: white;
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 16px;
+        }
+
+
+        nav a:hover {
+
+            color: #f4b400;
+        }
+
+
+        /* =========================
+           USER NAME
+        ========================= */
+
+        .user-name {
+
+            color: white;
+
+            font-weight: bold;
+
+            margin-left: 25px;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        .logout-link {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 16px;
+        }
+
+
+        .logout-link:hover {
+
+            color: #ffdddd;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+
+            min-height: 500px;
+
+            background:
+
+                linear-gradient(
+                    rgba(0, 80, 40, 0.75),
+                    rgba(0, 80, 40, 0.75)
+                ),
+
+                url("https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 40px 20px;
+        }
+
+
+        .hero-content {
+
+            color: white;
+
+            max-width: 800px;
+        }
+
+
+        .hero h1 {
+
+            font-size: 52px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero p {
+
+            font-size: 20px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .btn {
+
+            display: inline-block;
+
+            background: #f4b400;
+
+            color: #111;
+
+            padding: 14px 30px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .btn:hover {
+
+            background: #ffc928;
+        }
+
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+
+            padding: 60px 8%;
+
+            text-align: center;
+        }
+
+
+        .features h2 {
+
+            font-size: 34px;
+
+            margin-bottom: 40px;
+
+            color: #176b3a;
+        }
+
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 25px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.1);
+
+            transition: 0.3s;
+        }
+
+
+        .card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.13);
+        }
+
+
+        .card h3 {
+
+            margin: 15px 0;
+
+            color: #176b3a;
+        }
+
+
+        .card p {
+
+            color: #555;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            background: #123d27;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 30px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+
+            nav a,
+            .user-name,
+            .logout-link {
+
+                margin-left: 8px;
+
+                margin-right: 8px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 38px;
+            }
+
+
+            .cards {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav>
+
+
+    <div class="logo">
+
+        🚜 FarmRent
+
+    </div>
+
+
+    <div>
+
+
+        <a href="/">
+            Home
+        </a>
+
+
+        <a href="/equipment/">
+            Equipment
+        </a>
+
+
+        {% if user.is_authenticated %}
+
+
+            <!-- LOGGED IN -->
+
+            <a href="/equipment/my-bookings/">
+                My Bookings
+            </a>
+
+
+            <span class="user-name">
+
+                👤 {{ user.username }}
+
+            </span>
+
+
+            <a
+                href="/logout/"
+                class="logout-link">
+
+                Logout
+
+            </a>
+
+
+        {% else %}
+
+
+            <!-- LOGGED OUT -->
+
+            <a href="/login/">
+                Login
+            </a>
+
+
+            <a href="/register/">
+                Register
+            </a>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+
+        <h1>
+            Smart Farming Equipment Rental
+        </h1>
+
+
+        <p>
+
+            Rent tractors, harvesters, rotavators and other
+            agricultural equipment easily and affordably.
+
+        </p>
+
+
+        <a
+            href="/equipment/"
+            class="btn">
+
+            Explore Equipment
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section class="features">
+
+
+    <h2>
+        Why Choose FarmRent?
+    </h2>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+
+            <div style="font-size:45px;">
+                🚜
+            </div>
+
+
+            <h3>
+                Wide Range of Equipment
+            </h3>
+
+
+            <p>
+
+                Find tractors, harvesters, rotavators,
+                cultivators and many more farming machines.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="card">
+
+
+            <div style="font-size:45px;">
+                💰
+            </div>
+
+
+            <h3>
+                Affordable Pricing
+            </h3>
+
+
+            <p>
+
+                Transparent daily rental prices with
+                automatic total cost calculation.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="card">
+
+
+            <div style="font-size:45px;">
+                ⭐
+            </div>
+
+
+            <h3>
+                Trusted Reviews
+            </h3>
+
+
+            <p>
+
+                Check ratings and reviews before
+                renting your farming equipment.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+
+    <p>
+
+        © 2026 FarmRent |
+        Smart Online Farming Equipment Rental System
+
+    </p>
+
+
+</footer>
+
+
+</body>
+
+</html>

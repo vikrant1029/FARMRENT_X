@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FARMRENT_X | Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f2;
+            color: #1f2937;
+        }
+
+        header {
+            background: #173d2b;
+            color: white;
+            padding: 24px 7%;
+        }
+
+        header h1 {
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        header p {
+            color: #d5e6d9;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 25px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #17663b;
+            font-size: 30px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .actions a {
+            display: inline-block;
+            padding: 12px 18px;
+            background: #17663b;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            background: #104a2a;
+        }
+
+        .note {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff7df;
+            border-radius: 8px;
+            color: #795b12;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 750px) {
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🚜 FARMRENT_X</h1>
+        <p>Admin Dashboard | Equipment Rental Management</p>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <h2>Welcome, {{ request.user.username }}!</h2>
+            <p>Manage your farming equipment rental platform.</p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <p>Total Equipment</p>
+                <h3>{{ total_equipment }}</h3>
+            </div>
+
+            <div class="card">
+                <p>Available Equipment</p>
+                <h3>{{ available_equipment }}</h3>
+            </div>
+
+            <div class="card">
+                <p>Total Bookings</p>
+                <h3>{{ total_bookings }}</h3>
+            </div>
+
+            <div class="card">
+                <p>Confirmed Bookings</p>
+                <h3>{{ confirmed_bookings }}</h3>
+            </div>
+
+            <div class="card">
+                <p>Successful Demo Payments</p>
+                <h3>{{ successful_payment_count }}</h3>
+            </div>
+
+            <div class="card">
+                <p>Successful Demo Payment Total</p>
+                <h3>₹{{ total_demo_payments|floatformat:2 }}</h3>
+            </div>
+        </section>
+
+        <section class="actions">
+            <a href="/admin/equipment/equipment/">Manage Equipment</a>
+            <a href="/admin/equipment/booking/">Manage Bookings</a>
+            <a href="/admin/equipment/review/">Manage Reviews</a>
+            <a href="/admin/equipment/payment/">Manage Payments</a>
+        </section>
+
+        <div class="note">
+            <strong>Demo Mode:</strong>
+            Payment totals are simulated demo records and do not represent
+            real money received.
+        </div>
+    </main>
+</body>
+</html>

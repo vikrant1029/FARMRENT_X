@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Equipment | FarmRent</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f5;
+            color: #26352b;
+        }
+
+        nav {
+            background: #176b3a;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .booking-card {
+            background: white;
+            border-radius: 15px;
+            padding: 32px;
+            box-shadow: 0 5px 24px rgba(0, 0, 0, 0.09);
+        }
+
+        h1 {
+            color: #176b3a;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #657268;
+            line-height: 1.6;
+        }
+
+        .equipment-info {
+            background: #eaf6ee;
+            border: 1px solid #d5eadb;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 24px 0;
+        }
+
+        .equipment-info h2 {
+            color: #176b3a;
+            margin-bottom: 12px;
+        }
+
+        .equipment-info p {
+            margin: 8px 0;
+        }
+
+        .price {
+            font-size: 20px;
+            color: #176b3a;
+            font-weight: bold;
+        }
+
+        .error-box {
+            background: #fff0f0;
+            color: #a51d1d;
+            border: 1px solid #efb4b4;
+            border-radius: 8px;
+            padding: 13px;
+            margin: 18px 0;
+            line-height: 1.5;
+        }
+
+        .success-box {
+            background: #eaf6ee;
+            color: #176b3a;
+            border: 1px solid #c5e4cf;
+            border-radius: 8px;
+            padding: 13px;
+            margin: 18px 0;
+        }
+
+        form {
+            margin-top: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd4ce;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            background: #fff;
+        }
+
+        input:focus {
+            outline: 2px solid #a6d8b5;
+            border-color: #176b3a;
+        }
+
+        button {
+            width: 100%;
+            background: #176b3a;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #0f542d;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #176b3a;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 16px 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .booking-card {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">🚜 FarmRent</div>
+    <div>
+        <a href="/">Home</a>
+        <a href="/equipment/">Equipment</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="booking-card">
+
+        <h1>Book Equipment</h1>
+        <p class="subtitle">
+            Enter your details below to reserve your farming equipment.
+        </p>
+
+        <div class="equipment-info">
+            <h2>{{ equipment.name }}</h2>
+            <p><strong>Category:</strong> {{ equipment.category }}</p>
+            <p><strong>Location:</strong> {{ equipment.location }}, Maharashtra</p>
+            <p class="price">
+                ₹{{ equipment.price_per_day }} / day
+            </p>
+        </div>
+
+        {% if error %}
+            <div class="error-box" role="alert">
+                <strong>Booking not submitted:</strong> {{ error }}
+            </div>
+        {% endif %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="{% if message.tags == 'error' %}error-box{% else %}success-box{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+            <label for="customer_name">Your Name</label>
+            <input
+                type="text"
+                id="customer_name"
+                name="customer_name"
+                placeholder="Enter your full name"
+                maxlength="100"
+                value="{{ request.POST.customer_name|default:'' }}"
+                autocomplete="name"
+                required
+            >
+
+            <label for="customer_phone">Mobile Number</label>
+            <input
+                type="tel"
+                id="customer_phone"
+                name="customer_phone"
+                placeholder="Enter your 10-digit mobile number"
+                pattern="[0-9]{10}"
+                minlength="10"
+                maxlength="10"
+                value="{{ request.POST.customer_phone|default:'' }}"
+                autocomplete="tel"
+                inputmode="numeric"
+                required
+            >
+
+            <label for="start_date">Start Date</label>
+            <input
+                type="date"
+                id="start_date"
+                name="start_date"
+                value="{{ request.POST.start_date|default:'' }}"
+                required
+            >
+
+            <label for="number_of_days">Number of Days</label>
+            <input
+                type="number"
+                id="number_of_days"
+                name="number_of_days"
+                min="1"
+                max="30"
+                value="{{ request.POST.number_of_days|default:'1' }}"
+                placeholder="Enter number of days"
+                required
+            >
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+
+        <a href="/equipment/" class="back">
+            ← Back to Equipment
+        </a>
+
+    </div>
+</div>
+
+<script>
+    // Prevent selecting a past date in the browser.
+    const dateInput = document.getElementById("start_date");
+    const today = new Date();
+    const localToday = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+
+    dateInput.min = localToday;
+</script>
+
+</body>
+</html>

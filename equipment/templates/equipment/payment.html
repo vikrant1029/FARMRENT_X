@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Payment | FarmRent</title>
+
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; }
+
+        body {
+            margin: 0;
+            background: #f4f7f4;
+            color: #222;
+        }
+
+        header {
+            background: #176b3a;
+            color: white;
+            padding: 20px 8%;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #00000012;
+        }
+
+        h1 { color: #176b3a; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            font-size: 25px;
+            font-weight: bold;
+            color: #176b3a;
+            margin: 25px 0;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #176b3a;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover { background: #10542d; }
+
+        .notice {
+            background: #fff4d6;
+            padding: 13px;
+            border-radius: 8px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .messages {
+            color: #a12626;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 650px) {
+            .container { margin: 20px auto; padding: 15px; }
+            .card { padding: 20px; }
+        }
+    </style>
+</head>
+
+<body>
+<header>🚜 FarmRent</header>
+
+<main class="container">
+    <div class="card">
+        <h1>Demo Payment</h1>
+        <p>Review your booking before confirming.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="messages">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <span>Equipment</span>
+            <strong>{{ booking.equipment.name }}</strong>
+        </div>
+
+        <div class="row">
+            <span>Location</span>
+            <strong>{{ booking.equipment.location }}</strong>
+        </div>
+
+        <div class="row">
+            <span>Rental duration</span>
+            <strong>{{ booking.number_of_days }} day(s)</strong>
+        </div>
+
+        <div class="row">
+            <span>Price per day</span>
+            <strong>₹{{ booking.equipment.price_per_day }}</strong>
+        </div>
+
+        <div class="total">
+            Total: ₹{{ booking.total_price }}
+        </div>
+
+        <p class="notice">
+            This is a college project demonstration only.
+            No real money will be transferred or charged.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="payment_method">Choose Demo Payment Method</label>
+
+            <select id="payment_method" name="payment_method" required>
+                <option value="Demo UPI">Demo UPI</option>
+                <option value="Demo Card">Demo Card</option>
+            </select>
+
+            <button type="submit">
+                Confirm Demo Payment
+            </button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
