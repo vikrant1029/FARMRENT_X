@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+CSRF_COOKIE_SECURE = not DEBUG
 
 
 # Application definition
